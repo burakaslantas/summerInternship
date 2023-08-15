@@ -1,0 +1,54 @@
+<div class="logo text-center">
+    <h1>CREATE COMPANY</h1>
+</div>
+
+<div class="registration-form m-3 p-4">
+    <form [formGroup] = "companyForm">
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Isim</mat-label>
+                    <input formControlName="companyName" matInput placeholder="NETAS">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>hrMail</mat-label>
+                    <input formControlName="hrMail" matInput placeholder="hrMail@netas.com.tr">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>hrMailPassword</mat-label>
+                    <input formControlName="hrMailPassword" matInput placeholder="">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>aLiveToMail</mat-label>
+                    <input formControlName="aLiveToMail" matInput placeholder="NETAS">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>aLiveCcMail</mat-label>
+                    <input formControlName="aLiveCcMail" matInput placeholder="hrMail@netas.com.tr">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>aLiveBccMail</mat-label>
+                    <input formControlName="aLiveBccMail" matInput placeholder="">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="text-center">
+            <button *ngIf="!isUpdateActive" (click)="submit()" class="mt-4" mat-raised-button mat-button color="accent">Submit</button>
+        </div>
+        <div class="text-center">
+            <button *ngIf="isUpdateActive" (click)="update()" class="mt-4" mat-raised-button mat-button color="accent">Update</button>
+        </div>
+    </form>
+</div>

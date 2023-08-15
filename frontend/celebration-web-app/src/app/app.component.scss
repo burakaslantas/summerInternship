@@ -1,0 +1,27 @@
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.netas-navbar-logo-text-center{
+  object-fit: cover;
+}
+
+.netas-navbar-logo{
+  max-width:100%;
+}
+
+/* Add custom styles to make menu items white */
+.nav-pills .nav-link {
+  color: white !important;
+}
+
+/* Add custom styles to make dropdown menu items white */
+.dropdown-menu .dropdown-item {
+  color: white !important;
+}
+
+/* Add custom styles to make the active menu item have a different color */
+.nav-pills .nav-link.active {
+  background-color: white !important;
+  color: black !important;
+}

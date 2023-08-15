@@ -1,0 +1,110 @@
+<div class="logo text-center">
+    <h1>EMPLOYEE LIST</h1>
+  </div>
+  <div class="mt-4">
+    <div class="d-flex justify-content-between">
+      <button routerLink="/register" mat-raised-button color="accent"><i class="fa fa-arrow-left" aria-hidden="true"></i>
+        Back
+        to
+        Registration</button>
+      <mat-form-field appearance="outline">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Firstname" #input>
+      </mat-form-field>
+    </div>
+    
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+    
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+          <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+        </ng-container>
+    
+        <!-- employeeName Column -->
+        <ng-container matColumnDef="employeeName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee Name </th>
+          <td mat-cell *matCellDef="let row"> {{row.employeeName}} </td>
+        </ng-container>
+    
+        <!-- employeeSurname Column -->
+        <ng-container matColumnDef="employeeSurname">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee Surname </th>
+          <td mat-cell *matCellDef="let row"> {{row.employeeSurname}} </td>
+        </ng-container>
+    
+        <!-- employeeEmail Column -->
+        <ng-container matColumnDef="employeeEmail">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee Email </th>
+          <td mat-cell *matCellDef="let row"> {{row.employeeEmail}} </td>
+        </ng-container>
+  
+        <!-- employeeRegNo Column -->
+        <ng-container matColumnDef="employeeRegNo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee Reg No </th>
+          <td mat-cell *matCellDef="let row"> {{row.employeeRegNo}} </td>
+        </ng-container>
+
+        <!-- employeeStartDate Column -->
+        <ng-container matColumnDef="employeeStartDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee Start Date </th>
+            <td mat-cell *matCellDef="let row"> {{row.employeeStartDate}} </td>
+        </ng-container>
+
+        <!-- employeeBirthDay Column -->
+        <ng-container matColumnDef="employeeBirthDay">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee Birthday </th>
+            <td mat-cell *matCellDef="let row"> {{row.employeeBirthDay}} </td>
+        </ng-container>
+
+        <!-- managerName Column -->
+        <ng-container matColumnDef="managerName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Manager Name </th>
+            <td mat-cell *matCellDef="let row"> {{row.managerName}} </td>
+        </ng-container>
+
+        <!-- managerSurname Column -->
+        <ng-container matColumnDef="managerSurname">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Manager Surname </th>
+            <td mat-cell *matCellDef="let row"> {{row.managerSurname}} </td>
+        </ng-container>
+
+        <!-- managerRegNo Column -->
+        <ng-container matColumnDef="managerRegNo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Manager Reg No </th>
+            <td mat-cell *matCellDef="let row"> {{row.managerRegNo}} </td>
+        </ng-container>
+
+        <!-- companyRegNo Column -->
+        <ng-container matColumnDef="companyRegNo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Company Reg No </th>
+            <td mat-cell *matCellDef="let row"> {{row.companyRegNo}} </td>
+        </ng-container>
+  
+        <!-- Action Column -->
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+          <td mat-cell *matCellDef="let row">
+            <div class="action-buttons"> <!-- Wrap buttons in a container -->
+              <button mat-icon-button [routerLink]="['/detail', row.id]" class="mx-2" color="warn"><i class="fa fa-eye" aria-hidden="true"></i></button>
+              <button mat-icon-button (click)="edit(row.id)" class="mx-2" color="accent"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+              <button (click)="deleteUser(row.id)" mat-icon-button color="primary"><i class="fa fa-trash" aria-hidden="true"></i></button>
+            </div>
+          </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr>
+      </table>
+    
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    </div>
+  </div>
+    
+    

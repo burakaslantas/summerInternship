@@ -1,0 +1,85 @@
+<div class="logo text-center">
+    <h1>CREATE EVENT</h1>
+</div>
+
+<div class="registration-form m-3 p-4">
+    <form [formGroup] = "eventForm">
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Isim</mat-label>
+                    <input formControlName="eventName" matInput placeholder="Örn. 29 Ekim Cumhuriyet Bayramı">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Sirket</mat-label>
+                    <input formControlName="company" matInput placeholder="NETAS">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Tip</mat-label>
+                    <input formControlName="type" matInput placeholder="Genel">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>To</mat-label>
+                    <input formControlName="to" matInput placeholder="johnjoe@netas.com.tr" required>
+                    <mat-error *ngIf="toFormControl.invalid">
+                        Lütfen To Değişkeni Giriniz.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Bcc</mat-label>
+                    <input formControlName="bcc" matInput placeholder="johnjoe@netas.com.tr">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Saat</mat-label>
+                    <input formControlName="hour" matInput placeholder="09">
+                </mat-form-field>
+            </div>
+            <div class="col-md-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Dakika</mat-label>
+                    <input formControlName="minute" matInput placeholder="41">
+                </mat-form-field>
+            </div>
+            <div class="col-md-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Tarih</mat-label>
+                    <input formControlName="date" matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY">
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>FILE INPUT WILL BE HERE!!!</mat-label>
+                    <input formControlName="imageFile" matInput>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Metin</mat-label>
+                <textarea formControlName="textTemplate" matInput placeholder="Hello world!"></textarea>
+            </mat-form-field>
+        </div>
+        <div class="text-center">
+            <button *ngIf="!isUpdateActive" (click)="submit()" class="mt-4" mat-raised-button mat-button color="accent">Submit</button>
+        </div>
+        <div class="text-center">
+            <button *ngIf="isUpdateActive" (click)="update()" class="mt-4" mat-raised-button mat-button color="accent">Update</button>
+        </div>
+    </form>
+</div>
