@@ -4,15 +4,21 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 /* GET users listing. */
-router.get('/', function(req, res) {
-  res.send('GET respond with a resource BURAK');
+router.get('/', async function(req, res) {
+  try {
+    const admins = await prisma.admin.findMany();
+    res.status(200).json(admins);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred' });
+  }
 });
 
 router.post('/', async function(req, res) {
   const { adminName, company, email, emailPassword } = req.body;
   
   try {
-    const createdAdmin = await prisma.adminModel.create({
+    const createdAdmin = await prisma.admin.create({
       data: {
         adminName,
         company,
@@ -27,12 +33,39 @@ router.post('/', async function(req, res) {
   }
 });
 
-router.put('/', function(req, res) {
-  res.send('PUT respond with a resource BURAK');
+router.put('/:id', async function(req, res) {
+  const adminId = parseInt(req.params.id);
+  const { adminName, company, email, emailPassword } = req.body;
+
+  try {
+    const updatedAdmin = await prisma.admin.update({
+      where: { id: adminId },
+      data: {
+        adminName,
+        company,
+        email,
+        emailPassword,
+      },
+    });
+    res.status(200).json(updatedAdmin);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred' });
+  }
 });
 
-router.delete('/', function(req, res) {
-  res.send('DELETE respond with a resource BURAK');
+router.delete('/:id', async function(req, res) {
+  const adminId = parseInt(req.params.id);
+
+  try {
+    const deletedAdmin = await prisma.admin.delete({
+      where: { id: adminId },
+    });
+    res.status(200).json(deletedAdmin);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred' });
+  }
 });
 
 module.exports = router;
