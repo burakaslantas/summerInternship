@@ -3,11 +3,31 @@ var router = express.Router();
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-/* GET companies listing. */
 router.get('/', async function(req, res) {
   try {
-    const companies = await prisma.companyModel.findMany();
+    const companies = await prisma.companyModel.findMany({
+      where: { isDeleted: false } // Sadece silinmemiş şirketleri getir
+    });
     res.status(200).json(companies);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred' });
+  }
+});
+
+router.get('/:id', async function(req, res) {
+  const companyId = parseInt(req.params.id);
+  
+  try {
+    const company = await prisma.companyModel.findUnique({
+      where: { id: companyId },
+    });
+
+    if (company && !company.isDeleted) {
+      res.status(200).json(company);
+    } else {
+      res.status(404).json({ error: 'Company not found' });
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred' });
@@ -16,7 +36,7 @@ router.get('/', async function(req, res) {
 
 router.post('/', async function(req, res) {
   const { companyName, hrMail, hrMailPassword, aLiveToMail, aLiveCcMail, aLiveBccMail } = req.body;
-
+  
   try {
     const createdCompany = await prisma.companyModel.create({
       data: {
@@ -62,10 +82,13 @@ router.delete('/:id', async function(req, res) {
   const companyId = parseInt(req.params.id);
 
   try {
-    const deletedCompany = await prisma.companyModel.delete({
+    const updatedCompany = await prisma.companyModel.update({
       where: { id: companyId },
+      data: {
+        isDeleted: true
+      },
     });
-    res.status(200).json(deletedCompany);
+    res.status(200).json(updatedCompany);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred' });

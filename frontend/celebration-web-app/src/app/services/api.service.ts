@@ -40,62 +40,62 @@ export class ApiService {
   }
 
   postEventObj(registerObj: EventModel) {
-    return this.http.post<EventModel>(`${this.eventDataBaseUrl}`, registerObj)
+    return this.http.post<EventModel>(`${this.eventDataBaseUrl}`, registerObj, httpOptions)
   }
 
   getEventObj() {
-    return this.http.get<EventModel[]>(`${this.eventDataBaseUrl}`)
+    return this.http.get<EventModel[]>(`${this.eventDataBaseUrl}`, httpOptions)
   }
 
   updateEventObj(registerObj: EventModel, id: number) {
-    return this.http.put<EventModel>(`${this.eventDataBaseUrl}/${id}`, registerObj)
+    return this.http.put<EventModel>(`${this.eventDataBaseUrl}/${id}`, registerObj, httpOptions)
   }
 
   deleteEventObj(id: number) {
-    return this.http.delete<EventModel>(`${this.eventDataBaseUrl}/${id}`)
+    return this.http.delete<EventModel>(`${this.eventDataBaseUrl}/${id}`, httpOptions)
   }
 
   getEventObjId(id: number) {
-    return this.http.get<EventModel>(`${this.eventDataBaseUrl}/${id}`)
+    return this.http.get<EventModel>(`${this.eventDataBaseUrl}/${id}`, httpOptions)
   }
 
   postCompanyObj(registerObj: CompanyModel) {
-    return this.http.post<CompanyModel>(`${this.companyDataBaseUrl}`, registerObj)
+    return this.http.post<CompanyModel>(`${this.companyDataBaseUrl}`, registerObj, httpOptions)
   }
 
   getCompanyObj() {
-    return this.http.get<CompanyModel[]>(`${this.companyDataBaseUrl}`)
+    return this.http.get<CompanyModel[]>(`${this.companyDataBaseUrl}`, httpOptions)
   }
 
   updateCompanyObj(registerObj: CompanyModel, id: number) {
-    return this.http.put<CompanyModel>(`${this.companyDataBaseUrl}/${id}`, registerObj)
+    return this.http.put<CompanyModel>(`${this.companyDataBaseUrl}/${id}`, registerObj, httpOptions)
   }
 
   deleteCompanyObj(id: number) {
-    return this.http.delete<CompanyModel>(`${this.companyDataBaseUrl}/${id}`)
+    return this.http.delete<CompanyModel>(`${this.companyDataBaseUrl}/${id}`, httpOptions)
   }
 
   getCompanyObjId(id: number) {
-    return this.http.get<CompanyModel>(`${this.companyDataBaseUrl}/${id}`)
+    return this.http.get<CompanyModel>(`${this.companyDataBaseUrl}/${id}`, httpOptions)
   }
   
   postEmployeeObj(registerObj: EmployeeModel) {
-    return this.http.post<EmployeeModel>(`${this.employeeDataBaseUrl}`, registerObj)
+    return this.http.post<EmployeeModel>(`${this.employeeDataBaseUrl}`, registerObj, httpOptions)
   }
 
   getEmployeeObj() {
-    return this.http.get<EmployeeModel[]>(`${this.employeeDataBaseUrl}`)
+    return this.http.get<EmployeeModel[]>(`${this.employeeDataBaseUrl}`, httpOptions)
   }
 
   updateEmployeeObj(registerObj: EmployeeModel, id: number) {
-    return this.http.put<EmployeeModel>(`${this.employeeDataBaseUrl}/${id}`, registerObj)
+    return this.http.put<EmployeeModel>(`${this.employeeDataBaseUrl}/${id}`, registerObj, httpOptions)
   }
 
   deleteEmployeeObj(id: number) {
-    return this.http.delete<EmployeeModel>(`${this.employeeDataBaseUrl}/${id}`)
+    return this.http.delete<EmployeeModel>(`${this.employeeDataBaseUrl}/${id}`, httpOptions)
   }
 
   getEmployeeObjId(id: number) {
-    return this.http.get<EmployeeModel>(`${this.employeeDataBaseUrl}/${id}`)
+    return this.http.get<EmployeeModel>(`${this.employeeDataBaseUrl}/${id}`, httpOptions)
   }
 }

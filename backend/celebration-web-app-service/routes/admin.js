@@ -3,11 +3,31 @@ var router = express.Router();
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-/* GET users listing. */
 router.get('/', async function(req, res) {
   try {
-    const admins = await prisma.adminModel.findMany();
+    const admins = await prisma.admin.findMany({
+      where: { isDeleted: false } // Sadece silinmemiş adminleri getir
+    });
     res.status(200).json(admins);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred' });
+  }
+});
+
+router.get('/:id', async function(req, res) {
+  const adminId = parseInt(req.params.id);
+  
+  try {
+    const admin = await prisma.admin.findUnique({
+      where: { id: adminId },
+    });
+
+    if (admin && !admin.isDeleted) {
+      res.status(200).json(admin);
+    } else {
+      res.status(404).json({ error: 'Admin not found' });
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred' });
@@ -16,9 +36,9 @@ router.get('/', async function(req, res) {
 
 router.post('/', async function(req, res) {
   const { adminName, company, email, emailPassword } = req.body;
-
+  
   try {
-    const createdAdmin = await prisma.adminModel.create({
+    const createdAdmin = await prisma.admin.create({
       data: {
         adminName,
         company,
@@ -38,7 +58,7 @@ router.put('/:id', async function(req, res) {
   const { adminName, company, email, emailPassword } = req.body;
 
   try {
-    const updatedAdmin = await prisma.adminModel.update({
+    const updatedAdmin = await prisma.admin.update({
       where: { id: adminId },
       data: {
         adminName,
@@ -58,13 +78,16 @@ router.delete('/:id', async function(req, res) {
   const adminId = parseInt(req.params.id);
 
   try {
-    const deletedAdmin = await prisma.adminModel.delete({
+    const updatedAdmin = await prisma.admin.update({
       where: { id: adminId },
+      data: {
+        isDeleted: true
+      },
     });
-    res.status(200).json(deletedAdmin);
+    res.status(200).json(updatedAdmin);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'An error occurred', details: error.message });
+    res.status(500).json({ error: 'An error occurred' });
   }
 });
 
