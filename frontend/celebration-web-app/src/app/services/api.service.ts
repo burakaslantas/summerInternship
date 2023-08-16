@@ -1,9 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
 import { AdminModel } from '../models/admin.model';
 import { EventModel } from '../models/event.model';
 import { CompanyModel } from '../models/company.model';
 import { EmployeeModel } from '../models/employee.model';
+import { ImgModel } from '../models/img.model';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -17,7 +21,17 @@ export class ApiService {
   private eventDataBaseUrl: string = "http://localhost:3000/eventDataBaseUrl"
   private companyDataBaseUrl: string = "http://localhost:3000/companyDataBaseUrl"
   private employeeDataBaseUrl: string = "http://localhost:3000/employeeDataBaseUrl"
+  private imgDataBaseUrl: string = "http://localhost:3000/imgDataBaseUrl"
   constructor(private http: HttpClient) { }
+
+  uploadImage(file: File): Observable<string> {
+    const formData = new FormData();
+    formData.append('image', file);
+    console.log(formData);
+
+    return this.http.post<string>(`${this.imgDataBaseUrl}/upload`, formData);
+  }
+
 
   postRegistration(registerObj: AdminModel) {
     return this.http.post<AdminModel>(`${this.adminDataBaseUrl}`, registerObj, httpOptions)
@@ -39,8 +53,20 @@ export class ApiService {
     return this.http.get<AdminModel>(`${this.adminDataBaseUrl}/${RegId}`, httpOptions)
   }
 
+  /*
   postEventObj(registerObj: EventModel) {
     return this.http.post<EventModel>(`${this.eventDataBaseUrl}`, registerObj, httpOptions)
+  }
+  */
+
+  postEventObj(registerObj: EventModel, imageFile: File): Observable<EventModel> {
+    return this.uploadImage(imageFile).pipe(
+      
+      switchMap(imagePath => {
+        registerObj.imageFile = imagePath; // Update the image path in the EventModel object
+        return this.http.post<EventModel>(`${this.eventDataBaseUrl}`, registerObj, httpOptions);
+      })
+    );
   }
 
   getEventObj() {
@@ -98,4 +124,25 @@ export class ApiService {
   getEmployeeObjId(id: number) {
     return this.http.get<EmployeeModel>(`${this.employeeDataBaseUrl}/${id}`, httpOptions)
   }
+  /*
+  postImgObj(registerObj: ImgModel) {
+    return this.http.post<ImgModel>(`${this.imgDataBaseUrl}`, registerObj, httpOptions)
+  }
+
+  getImgObj() {
+    return this.http.get<ImgModel[]>(`${this.imgDataBaseUrl}`, httpOptions)
+  }
+
+  updateImgObj(registerObj: ImgModel, id: number) {
+    return this.http.put<ImgModel>(`${this.imgDataBaseUrl}/${id}`, registerObj, httpOptions)
+  }
+
+  deleteImgObj(id: number) {
+    return this.http.delete<ImgModel>(`${this.imgDataBaseUrl}/${id}`, httpOptions)
+  }
+
+  getImgObjId(id: number) {
+    return this.http.get<ImgModel>(`${this.imgDataBaseUrl}/${id}`, httpOptions)
+  }
+  */
 }
