@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 /* GET users listing. */
 router.get('/', async function(req, res) {
   try {
-    const admins = await prisma.admin.findMany();
+    const admins = await prisma.adminModel.findMany();
     res.status(200).json(admins);
   } catch (error) {
     console.error(error);
@@ -16,9 +16,9 @@ router.get('/', async function(req, res) {
 
 router.post('/', async function(req, res) {
   const { adminName, company, email, emailPassword } = req.body;
-  
+
   try {
-    const createdAdmin = await prisma.admin.create({
+    const createdAdmin = await prisma.adminModel.create({
       data: {
         adminName,
         company,
@@ -38,7 +38,7 @@ router.put('/:id', async function(req, res) {
   const { adminName, company, email, emailPassword } = req.body;
 
   try {
-    const updatedAdmin = await prisma.admin.update({
+    const updatedAdmin = await prisma.adminModel.update({
       where: { id: adminId },
       data: {
         adminName,
@@ -58,13 +58,13 @@ router.delete('/:id', async function(req, res) {
   const adminId = parseInt(req.params.id);
 
   try {
-    const deletedAdmin = await prisma.admin.delete({
+    const deletedAdmin = await prisma.adminModel.delete({
       where: { id: adminId },
     });
     res.status(200).json(deletedAdmin);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'An error occurred' });
+    res.status(500).json({ error: 'An error occurred', details: error.message });
   }
 });
 

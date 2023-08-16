@@ -1,9 +1,13 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AdminModel } from '../models/admin.model';
 import { EventModel } from '../models/event.model';
 import { CompanyModel } from '../models/company.model';
 import { EmployeeModel } from '../models/employee.model';
+
+const httpOptions = {
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
+}
 
 @Injectable({
   providedIn: 'root'
@@ -16,23 +20,23 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   postRegistration(registerObj: AdminModel) {
-    return this.http.post<AdminModel>(`${this.adminDataBaseUrl}`, registerObj)
+    return this.http.post<AdminModel>(`${this.adminDataBaseUrl}`, registerObj, httpOptions)
   }
 
   getRegisteredUser() {
-    return this.http.get<AdminModel[]>(`${this.adminDataBaseUrl}`)
+    return this.http.get<AdminModel[]>(`${this.adminDataBaseUrl}`, httpOptions)
   }
 
   updateRegisterUser(registerObj: AdminModel, RegId: number) {
-    return this.http.put<AdminModel>(`${this.adminDataBaseUrl}/${RegId}`, registerObj)
+    return this.http.put<AdminModel>(`${this.adminDataBaseUrl}/${RegId}`, registerObj, httpOptions)
   }
 
   deleteRegistered(RegId: number) {
-    return this.http.delete<AdminModel>(`${this.adminDataBaseUrl}/${RegId}`)
+    return this.http.delete<AdminModel>(`${this.adminDataBaseUrl}/${RegId}`, httpOptions)
   }
 
   getRegisteredUserId(RegId: number) {
-    return this.http.get<AdminModel>(`${this.adminDataBaseUrl}/${RegId}`)
+    return this.http.get<AdminModel>(`${this.adminDataBaseUrl}/${RegId}`, httpOptions)
   }
 
   postEventObj(registerObj: EventModel) {
