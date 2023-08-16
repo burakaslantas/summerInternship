@@ -3,7 +3,7 @@
 </div>
 
 <div class="registration-form m-3 p-4">
-    <form [formGroup] = "eventForm">
+    <form [formGroup] = "eventForm" enctype="multipart/form-data">
         <div class="row">
             <div class="col-md-4">
                 <mat-form-field appearance="outline">
@@ -64,8 +64,9 @@
             </div>
             <div class="col-md-6">
                 <mat-form-field appearance="outline">
-                    <mat-label>FILE INPUT WILL BE HERE!!!</mat-label>
-                    <input formControlName="imageFile" matInput>
+                    <mat-label>Resim Yükle</mat-label>
+                    <ngx-mat-file-input placeholder="Resim Yükle" name="imageFile" formControlName="imageFile" (onclick)="onImageFileSelected($event)" ></ngx-mat-file-input>
+                    <mat-icon matSuffix>folder</mat-icon>
                 </mat-form-field>
             </div>
         </div>

@@ -11,6 +11,7 @@ var adminRouter = require('./routes/admin');
 var eventRouter = require('./routes/event');
 var companyRouter = require('./routes/company');
 var employeeRouter = require('./routes/employee');
+var imgUploadRouter = require('./routes/imgUpload');
 
 var app = express();
 
@@ -31,6 +32,7 @@ app.use('/adminDataBaseUrl', adminRouter);
 app.use('/eventDataBaseUrl', eventRouter);
 app.use('/companyDataBaseUrl', companyRouter);
 app.use('/employeeDataBaseUrl', employeeRouter);
+app.use('/imgDataBaseUrl', imgUploadRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

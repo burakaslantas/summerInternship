@@ -34,6 +34,8 @@ import { CreateEventComponent } from './create-event/create-event.component';
 import { CompanyListComponent } from './company-list/company-list.component';
 import { EventListComponent } from './event-list/event-list.component';
 import { EmployeeListComponent } from './employee-list/employee-list.component';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
+
 
 @NgModule({
   declarations: [
@@ -71,7 +73,8 @@ import { EmployeeListComponent } from './employee-list/employee-list.component';
     MatCardModule,
     MatChipsModule,
     MatSelectModule,
-    NavbarComponent
+    NavbarComponent,
+    MaterialFileInputModule
     
   ],
   providers: [],

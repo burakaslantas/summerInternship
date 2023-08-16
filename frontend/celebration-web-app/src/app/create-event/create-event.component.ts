@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { ApiService } from '../services/api.service';
+import { NGX_MAT_FILE_INPUT_CONFIG } from 'ngx-material-file-input';
 
 @Component({
   selector: 'app-create-event',
@@ -14,6 +15,7 @@ export class CreateEventComponent implements OnInit {
   public packages = []
 
   eventForm!: FormGroup;
+  selectedFile!: File;
   public userIdToUpdate!: number;
   public isUpdateActive: boolean = false;
   form: any;
@@ -38,6 +40,12 @@ export class CreateEventComponent implements OnInit {
       imageFile: [''],
       textTemplate: [''],
     });
+  
+    // Configure the NGX_MAT_FILE_INPUT_CONFIG token
+    const fileInputConfig = {
+      sizeUnit: 'Octet'
+    };
+    providers: [{ provide: NGX_MAT_FILE_INPUT_CONFIG, useValue: fileInputConfig }];
 
     this.activatedRoute.params.subscribe(val=>{
       this.userIdToUpdate = val['id'];
@@ -50,6 +58,25 @@ export class CreateEventComponent implements OnInit {
     
   }
 
+  onImageFileSelected(event: any): void {
+    console.log(event.files[0]);
+    console.log("onImageFileSelected HERE");
+    this.selectedFile = event.files[0];
+  }
+
+  submit(){
+    
+      console.log(this.eventForm.value);
+      console.log(this.selectedFile);
+      this.api.postEventObj(this.eventForm.value, this.selectedFile)
+      .subscribe(res=>{
+        this.toastService.success({detail: "SUCCESS", summary: "Enquiry Added", duration: 3000});
+        this.eventForm.reset();
+      })
+    
+  }
+
+  /*
   submit(){
     if(this.eventForm.valid){
       console.log(this.eventForm.value);
@@ -60,6 +87,7 @@ export class CreateEventComponent implements OnInit {
       })
     }
   }
+  */
 
   update(){
     if(this.eventForm.valid){
