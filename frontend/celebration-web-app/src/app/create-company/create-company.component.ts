@@ -62,7 +62,7 @@ export class CreateCompanyComponent implements OnInit {
       .subscribe(res=>{
         this.toastService.success({detail: "SUCCESS", summary: "Enquiry Updated", duration: 3000});
         this.companyForm.reset();
-        this.router.navigate(['admin-list']);
+        this.router.navigate(['company-list']);
       })
     }
   }

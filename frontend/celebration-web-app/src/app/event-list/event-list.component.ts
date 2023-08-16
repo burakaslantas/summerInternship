@@ -45,7 +45,7 @@ export class EventListComponent implements OnInit {
   }
 
   edit(id: number){
-    this.router.navigate(['update', id]);
+    this.router.navigate(['event-list/update', id]);
   }
 
   deleteUser(id: number){

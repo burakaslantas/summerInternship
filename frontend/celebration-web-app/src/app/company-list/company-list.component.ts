@@ -45,7 +45,7 @@ export class CompanyListComponent implements OnInit {
   }
 
   edit(id: number){
-    this.router.navigate(['update', id]);
+    this.router.navigate(['company-list/update', id]);
   }
 
   deleteUser(id: number){

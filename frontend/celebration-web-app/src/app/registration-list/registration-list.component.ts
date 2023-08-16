@@ -45,7 +45,7 @@ export class RegistrationListComponent implements OnInit {
   }
 
   edit(id: number){
-    this.router.navigate(['update', id]);
+    this.router.navigate(['admin-list/update', id]);
   }
 
   deleteUser(id: number){

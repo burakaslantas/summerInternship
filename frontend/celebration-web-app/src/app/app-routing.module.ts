@@ -19,7 +19,9 @@ const routes: Routes = [
   { path: 'company-list', component: CompanyListComponent },
   { path: 'employee-list', component: EmployeeListComponent },
   { path: 'detail/:id', component: UserDetailComponent },
-  { path: 'update/:id', component: CreateRegistrationComponent }
+  { path: 'admin-list/update/:id', component: CreateRegistrationComponent },
+  { path: 'company-list/update/:id', component: CreateCompanyComponent },
+  { path: 'event-list/update/:id', component: CreateEventComponent }
 ];
 
 @NgModule({
