@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 router.get('/', async function(req, res) {
   try {
     const companies = await prisma.companyModel.findMany({
-      where: { isDeleted: false } // Sadece silinmemiş şirketleri getir
+      where: { isDeleted: 0 } // Sadece silinmemiş şirketleri getir
     });
     res.status(200).json(companies);
   } catch (error) {
@@ -85,7 +85,7 @@ router.delete('/:id', async function(req, res) {
     const updatedCompany = await prisma.companyModel.update({
       where: { id: companyId },
       data: {
-        isDeleted: true
+        isDeleted: 1
       },
     });
     res.status(200).json(updatedCompany);

@@ -5,8 +5,8 @@ const prisma = new PrismaClient();
 
 router.get('/', async function(req, res) {
   try {
-    const admins = await prisma.admin.findMany({
-      where: { isDeleted: false } // Sadece silinmemiş adminleri getir
+    const admins = await prisma.adminModel.findMany({
+      where: { isDeleted: 0 } // Sadece silinmemiş adminleri getir
     });
     res.status(200).json(admins);
   } catch (error) {
@@ -19,7 +19,7 @@ router.get('/:id', async function(req, res) {
   const adminId = parseInt(req.params.id);
   
   try {
-    const admin = await prisma.admin.findUnique({
+    const admin = await prisma.adminModel.findUnique({
       where: { id: adminId },
     });
 
@@ -38,7 +38,7 @@ router.post('/', async function(req, res) {
   const { adminName, company, email, emailPassword } = req.body;
   
   try {
-    const createdAdmin = await prisma.admin.create({
+    const createdAdmin = await prisma.adminModel.create({
       data: {
         adminName,
         company,
@@ -58,7 +58,7 @@ router.put('/:id', async function(req, res) {
   const { adminName, company, email, emailPassword } = req.body;
 
   try {
-    const updatedAdmin = await prisma.admin.update({
+    const updatedAdmin = await prisma.adminModel.update({
       where: { id: adminId },
       data: {
         adminName,
@@ -78,10 +78,10 @@ router.delete('/:id', async function(req, res) {
   const adminId = parseInt(req.params.id);
 
   try {
-    const updatedAdmin = await prisma.admin.update({
+    const updatedAdmin = await prisma.adminModel.update({
       where: { id: adminId },
       data: {
-        isDeleted: true
+        isDeleted: 1
       },
     });
     res.status(200).json(updatedAdmin);
