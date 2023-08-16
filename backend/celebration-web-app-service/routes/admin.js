@@ -23,7 +23,7 @@ router.get('/:id', async function(req, res) {
       where: { id: adminId },
     });
 
-    if (admin && !admin.isDeleted) {
+    if (admin && admin.isDeleted === 0) {
       res.status(200).json(admin);
     } else {
       res.status(404).json({ error: 'Admin not found' });

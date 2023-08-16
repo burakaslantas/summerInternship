@@ -23,7 +23,7 @@ router.get('/:id', async function(req, res) {
       where: { id: companyId },
     });
 
-    if (company && !company.isDeleted) {
+    if (company && company.isDeleted === 0) {
       res.status(200).json(company);
     } else {
       res.status(404).json({ error: 'Company not found' });

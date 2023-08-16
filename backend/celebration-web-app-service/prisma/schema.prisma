@@ -11,21 +11,51 @@ datasource db {
 }
 
 model adminModel {
-  id            Int       @id @default(autoincrement())
-  adminName     String
-  company       String
-  email         String    @unique
-  emailPassword String
-  isDeleted     Int       @default(0)
+  id                  Int       @id @default(autoincrement())
+  adminName           String
+  company             String
+  email               String    @unique
+  emailPassword       String
+  isDeleted           Int       @default(0)
 }
 
 model companyModel {
-  id            Int       @id @default(autoincrement())
-  companyName   String
-  hrMail        String
-  hrMailPassword String
-  aLiveToMail   String
-  aLiveCcMail   String
-  aLiveBccMail  String
-  isDeleted     Int       @default(0)
+  id                  Int       @id @default(autoincrement())
+  companyName         String
+  hrMail              String
+  hrMailPassword      String
+  aLiveToMail         String
+  aLiveCcMail         String
+  aLiveBccMail        String
+  isDeleted           Int       @default(0)
+}
+
+model employeeModel {
+  id                  Int       @id @default(autoincrement())
+  employeeName        String
+  employeeSurname     String
+  employeeEmail       String    @unique
+  employeeRegNo       String    @unique
+  employeeStartDate   String    // You might want to use Date type depending on your needs
+  employeeBirthDay    String    // You might want to use Date type depending on your needs
+  managerName         String
+  managerSurname      String
+  managerRegNo        String
+  companyRegNo        String
+  isDeleted           Int       @default(0)
+}
+
+model eventModel {
+  id                  Int       @id @default(autoincrement())
+  eventName           String
+  company             String
+  type                String
+  to                  String
+  bcc                 String
+  hour                String
+  minute              String
+  date                String   // You might want to use Date type depending on your needs
+  imageFile           String   // This field stores the image file path
+  textTemplate        String
+  isDeleted           Int       @default(0)
 }
