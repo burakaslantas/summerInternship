@@ -53,12 +53,11 @@ export class ApiService {
     return this.http.get<AdminModel>(`${this.adminDataBaseUrl}/${RegId}`, httpOptions)
   }
 
-  /*
   postEventObj(registerObj: EventModel) {
     return this.http.post<EventModel>(`${this.eventDataBaseUrl}`, registerObj, httpOptions)
   }
-  */
 
+  /*
   postEventObj(registerObj: EventModel, imageFile: File): Observable<EventModel> {
     return this.uploadImage(imageFile).pipe(
       
@@ -68,6 +67,7 @@ export class ApiService {
       })
     );
   }
+  */
 
   getEventObj() {
     return this.http.get<EventModel[]>(`${this.eventDataBaseUrl}`, httpOptions)
