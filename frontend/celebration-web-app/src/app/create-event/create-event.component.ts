@@ -15,7 +15,6 @@ export class CreateEventComponent implements OnInit {
   public packages = []
 
   eventForm!: FormGroup;
-  selectedFile!: File;
   public userIdToUpdate!: number;
   public isUpdateActive: boolean = false;
   form: any;
@@ -23,9 +22,13 @@ export class CreateEventComponent implements OnInit {
 
   toFormControl = new FormControl('', Validators.required);
 
-  constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute, private router: Router, private api: ApiService, private toastService: NgToastService){
-
-  }
+  constructor(
+    private fb: FormBuilder, 
+    private activatedRoute: ActivatedRoute, 
+    private router: Router, 
+    private api: ApiService, 
+    private toastService: NgToastService
+  ) {}
 
   ngOnInit(): void {
     this.eventForm = this.fb.group({
@@ -49,59 +52,77 @@ export class CreateEventComponent implements OnInit {
 
     this.activatedRoute.params.subscribe(val=>{
       this.userIdToUpdate = val['id'];
+      console.log(val['id'])
       this.api.getEventObjId(this.userIdToUpdate)
       .subscribe(res=>{
         this.isUpdateActive = true;
         this.fillFormToUpdate(res);
       });
     });
-    
   }
 
-  onImageFileSelected(event: any): void {
-    console.log(event.files[0]);
-    console.log("onImageFileSelected HERE");
-    this.selectedFile = event.files[0];
-  }
+  submit() {
+    if (this.eventForm.valid) {
+      const eventModel: EventModel = {
+        eventName: this.eventForm.get('eventName')?.value,
+        company: this.eventForm.get('company')?.value,
+        type: this.eventForm.get('type')?.value,
+        to: this.eventForm.get('to')?.value,
+        bcc: this.eventForm.get('bcc')?.value,
+        hour: this.eventForm.get('hour')?.value,
+        minute: this.eventForm.get('minute')?.value,
+        date: this.eventForm.get('date')?.value,
+        imageFile: this.eventForm.get('imageFile')?.value ? this.eventForm.get('imageFile')?.value._files[0] : null,
+        textTemplate: this.eventForm.get('textTemplate')?.value,
+        id: this.userIdToUpdate
+      };
 
-  submit(){
-    
-      console.log(this.eventForm.value);
-      console.log(this.selectedFile);
-      this.api.postEventObj(this.eventForm.value, this.selectedFile)
-      .subscribe(res=>{
-        this.toastService.success({detail: "SUCCESS", summary: "Enquiry Added", duration: 3000});
-        this.eventForm.reset();
-      })
-    
-  }
+      console.log(eventModel)
 
-  /*
-  submit(){
-    if(this.eventForm.valid){
-      console.log(this.eventForm.value);
-      this.api.postEventObj(this.eventForm.value)
-      .subscribe(res=>{
-        this.toastService.success({detail: "SUCCESS", summary: "Enquiry Added", duration: 3000});
-        this.eventForm.reset();
-      })
+      this.api.postEventObj(eventModel)
+        .subscribe(
+          res => {
+            this.toastService.success({ detail: "SUCCESS", summary: "Enquiry Added", duration: 3000 });
+            this.eventForm.reset();
+          },
+          error => {
+            console.error("Error adding event", error);
+          }
+        );
     }
   }
-  */
+  
+  update() {
+    if (this.eventForm.valid) {
+      const eventModel: EventModel = {
+        eventName: this.eventForm.get('eventName')?.value,
+        company: this.eventForm.get('company')?.value,
+        type: this.eventForm.get('type')?.value,
+        to: this.eventForm.get('to')?.value,
+        bcc: this.eventForm.get('bcc')?.value,
+        hour: this.eventForm.get('hour')?.value,
+        minute: this.eventForm.get('minute')?.value,
+        date: this.eventForm.get('date')?.value,
+        imageFile: this.eventForm.get('imageFile')?.value ? this.eventForm.get('imageFile')?.value._files[0] : null,
+        textTemplate: this.eventForm.get('textTemplate')?.value,
+        id: this.eventForm.get('id')?.value
+      };
 
-  update(){
-    if(this.eventForm.valid){
-      console.log(this.eventForm.value);
-      this.api.updateEventObj(this.eventForm.value, this.userIdToUpdate)
-      .subscribe(res=>{
-        this.toastService.success({detail: "SUCCESS", summary: "Enquiry Updated", duration: 3000});
-        this.eventForm.reset();
-        this.router.navigate(['event-list']);
-      })
+      this.api.updateEventObj(eventModel, this.userIdToUpdate)
+        .subscribe(
+          res => {
+            this.toastService.success({ detail: "SUCCESS", summary: "Enquiry Updated", duration: 3000 });
+            this.eventForm.reset();
+            this.router.navigate(['event-list']);
+          },
+          error => {
+            console.error("Error updating event", error);
+          }
+        );
     }
   }
 
-  fillFormToUpdate(user: EventModel){
+  fillFormToUpdate(user: EventModel) {
     this.eventForm.setValue({
       eventName: user.eventName,
       company: user.company,
@@ -116,5 +137,4 @@ export class CreateEventComponent implements OnInit {
       id: user.id
     });
   }
-
 }
