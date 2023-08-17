@@ -7,7 +7,7 @@ import { AdminModel } from '../models/admin.model';
 import { EventModel } from '../models/event.model';
 import { CompanyModel } from '../models/company.model';
 import { EmployeeModel } from '../models/employee.model';
-import { ImgModel } from '../models/img.model';
+import { AttachmentModel } from '../models/attachment.model';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -24,13 +24,6 @@ export class ApiService {
   private imgDataBaseUrl: string = "http://localhost:3000/imgDataBaseUrl"
   constructor(private http: HttpClient) { }
 
-  uploadImage(file: File): Observable<string> {
-    const formData = new FormData();
-    formData.append('image', file);
-    console.log(formData);
-
-    return this.http.post<string>(`${this.imgDataBaseUrl}/upload`, formData);
-  }
 
 
   postRegistration(registerObj: AdminModel) {
@@ -130,11 +123,11 @@ export class ApiService {
   getEmployeeObjId(id: number) {
     return this.http.get<EmployeeModel>(`${this.employeeDataBaseUrl}/${id}`, httpOptions)
   }
-  /*
-  postImgObj(registerObj: ImgModel) {
-    return this.http.post<ImgModel>(`${this.imgDataBaseUrl}`, registerObj, httpOptions)
+  
+  postImgObj(registerObj: FormData) {
+    return this.http.post<any>(`${this.imgDataBaseUrl}/upload`, registerObj)
   }
-
+/*
   getImgObj() {
     return this.http.get<ImgModel[]>(`${this.imgDataBaseUrl}`, httpOptions)
   }

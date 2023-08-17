@@ -9,12 +9,22 @@ import { NGX_MAT_FILE_INPUT_CONFIG } from 'ngx-material-file-input';
 @Component({
   selector: 'app-create-event',
   templateUrl: './create-event.component.html',
-  styleUrls: ['./create-event.component.scss']
+  styleUrls: ['./create-event.component.scss'],
+  providers: [
+    {
+      provide: NGX_MAT_FILE_INPUT_CONFIG,
+      useValue: { maxFileSize: 10 * 1024 * 1024 } // Set the same value as on the server (10MB)
+    }
+  ]
+
 })
 export class CreateEventComponent implements OnInit {
+  maxFileSize = 10 * 1024 * 1024;
   public packages = []
 
+  attachments: any[] = [];
   eventForm!: FormGroup;
+  imgFile!: File;
   public userIdToUpdate!: number;
   public isUpdateActive: boolean = false;
   form: any;
@@ -43,12 +53,6 @@ export class CreateEventComponent implements OnInit {
       imageFile: [''],
       textTemplate: [''],
     });
-  
-    // Configure the NGX_MAT_FILE_INPUT_CONFIG token
-    const fileInputConfig = {
-      sizeUnit: 'Octet'
-    };
-    providers: [{ provide: NGX_MAT_FILE_INPUT_CONFIG, useValue: fileInputConfig }];
 
     this.activatedRoute.params.subscribe(val=>{
       this.userIdToUpdate = val['id'];
@@ -63,6 +67,9 @@ export class CreateEventComponent implements OnInit {
 
   submit() {
     if (this.eventForm.valid) {
+      this.imgFile = this.eventForm.get('imageFile')?.value ? this.eventForm.get('imageFile')?.value._files[0]:File;
+      this.uploadFile();
+      /*
       const eventModel: EventModel = {
         eventName: this.eventForm.get('eventName')?.value,
         company: this.eventForm.get('company')?.value,
@@ -72,12 +79,16 @@ export class CreateEventComponent implements OnInit {
         hour: this.eventForm.get('hour')?.value,
         minute: this.eventForm.get('minute')?.value,
         date: this.eventForm.get('date')?.value,
-        imageFile: this.eventForm.get('imageFile')?.value ? this.eventForm.get('imageFile')?.value._files[0] : null,
+        imageFile: this.eventForm.get('imageFile')?.value ? this.imgFile.name : '',
         textTemplate: this.eventForm.get('textTemplate')?.value,
         id: this.userIdToUpdate
       };
+      
 
       console.log(eventModel)
+      console.log(this.imgFile)
+      console.log(eventModel.imageFile ? this.imgFile.name : undefined)
+      
 
       this.api.postEventObj(eventModel)
         .subscribe(
@@ -89,7 +100,23 @@ export class CreateEventComponent implements OnInit {
             console.error("Error adding event", error);
           }
         );
-    }
+    */
+    
+      }
+  }
+
+  async uploadFile() {
+    let formData = new FormData();
+    formData.append('file', this.imgFile, this.imgFile.name);
+    await this.api.postImgObj(formData).toPromise().then(response => {
+      if (response !== undefined && response.error == null){
+        const attachment : any = response; // TO DO!!! attachment
+        this.attachments.push(attachment);
+      }
+    })
+    .catch(reason => {
+      console.log("Error by geting img attachment");
+    })
   }
   
   update() {

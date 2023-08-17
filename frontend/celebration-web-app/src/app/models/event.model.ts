@@ -1,3 +1,5 @@
+import { AttachmentModel } from "./attachment.model";
+
 export class EventModel{
     eventName!: string;
     company!: string;
@@ -7,7 +9,7 @@ export class EventModel{
     hour!: string;
     minute!: string;
     date!: string;
-    imageFile!: File | null; // Change the type to accept null or File
+    imageFile!: AttachmentModel; // Change the type to accept null or File
     textTemplate!: string;
     id!: number;
   }

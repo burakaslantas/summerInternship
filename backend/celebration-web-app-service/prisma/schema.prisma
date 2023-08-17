@@ -29,3 +29,42 @@ model companyModel {
   aLiveBccMail  String
   isDeleted     Int       @default(0)
 }
+
+model employeeModel {
+  id                  Int       @id @default(autoincrement())
+  employeeName        String
+  employeeSurname     String
+  employeeEmail       String    @unique
+  employeeRegNo       String    @unique
+  employeeStartDate   String    // You might want to use Date type depending on your needs
+  employeeBirthDay    String    // You might want to use Date type depending on your needs
+  managerName         String
+  managerSurname      String
+  managerRegNo        String
+  companyRegNo        String
+  isDeleted           Int       @default(0)
+}
+
+model eventModel {
+  id                  Int       @id @default(autoincrement())
+  eventName           String
+  company             String
+  type                String
+  to                  String
+  bcc                 String
+  hour                String
+  minute              String
+  date                String   // You might want to use Date type depending on your needs
+  imageFile           attachmentModel? @relation(fields: [fileId], references: [id]) // This field stores the image file path
+  fileId              Int       @unique
+  textTemplate        String
+  isDeleted           Int       @default(0)
+}
+
+model attachmentModel {
+  id                  Int       @id @default(autoincrement())
+  originalName        String
+  fileName            String
+  filePath            String
+  event               eventModel?
+}
