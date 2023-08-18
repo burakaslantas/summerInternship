@@ -10,61 +10,69 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model adminModel {
-  id            Int       @id @default(autoincrement())
-  adminName     String
-  company       String
-  email         String    @unique
-  emailPassword String
-  isDeleted     Int       @default(0)
+model companyModel {
+  id                  Int               @id @default(autoincrement()) @unique
+  companyName         String            @unique
+  hrMail              String
+  hrMailPassword      String
+  aLiveToMail         String
+  aLiveCcMail         String
+  aLiveBccMail        String
+  admins              adminModel[]
+  employees           employeeModel[]
+  events              eventModel[]
+  isDeleted           Int               @default(0)
 }
 
-model companyModel {
-  id            Int       @id @default(autoincrement())
-  companyName   String
-  hrMail        String
-  hrMailPassword String
-  aLiveToMail   String
-  aLiveCcMail   String
-  aLiveBccMail  String
-  isDeleted     Int       @default(0)
+model adminModel {
+  id                  Int               @id @default(autoincrement()) @unique
+  adminName           String
+  email               String            @unique
+  emailPassword       String
+  company             companyModel      @relation(fields: [companyId], references: [id])
+  companyId           Int
+  isDeleted           Int               @default(0)
 }
 
 model employeeModel {
-  id                  Int       @id @default(autoincrement())
+  id                  Int               @id @default(autoincrement()) @unique
   employeeName        String
   employeeSurname     String
-  employeeEmail       String    @unique
-  employeeRegNo       String    @unique
-  employeeStartDate   String    // You might want to use Date type depending on your needs
-  employeeBirthDay    String    // You might want to use Date type depending on your needs
+  employeeEmail       String
+  employeeRegNo       String
+  employeeStartDate   String
+  employeeBirthDay    String
   managerName         String
   managerSurname      String
   managerRegNo        String
+  company             companyModel      @relation(fields: [companyId], references: [id])
   companyRegNo        String
-  isDeleted           Int       @default(0)
+  companyId           Int
+  isDeleted           Int               @default(0)
 }
 
 model eventModel {
-  id                  Int       @id @default(autoincrement())
+  id                  Int               @id @default(autoincrement()) @unique
   eventName           String
-  company             String
   type                String
   to                  String
   bcc                 String
   hour                String
   minute              String
-  date                String   // You might want to use Date type depending on your needs
-  imageFile           attachmentModel? @relation(fields: [fileId], references: [id]) // This field stores the image file path
-  fileId              Int       @unique
+  date                String
+  imageFile           attachmentModel?
   textTemplate        String
-  isDeleted           Int       @default(0)
+  company             companyModel      @relation(fields: [companyId], references: [id])
+  companyId           Int
+  isDeleted           Int               @default(0)
 }
 
 model attachmentModel {
-  id                  Int       @id @default(autoincrement())
+  id                  Int               @id @default(autoincrement()) @unique
   originalName        String
   fileName            String
   filePath            String
-  event               eventModel?
+  event               eventModel?       @relation(fields: [eventId], references: [id])
+  eventId             Int?              @unique
+  isDeleted           Int               @default(0)
 }

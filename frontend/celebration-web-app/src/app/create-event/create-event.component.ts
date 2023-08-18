@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { ApiService } from '../services/api.service';
 import { NGX_MAT_FILE_INPUT_CONFIG } from 'ngx-material-file-input';
+import { AttachmentModel } from '../models/attachment.model';
 
 @Component({
   selector: 'app-create-event',
@@ -69,7 +70,7 @@ export class CreateEventComponent implements OnInit {
     if (this.eventForm.valid) {
       this.imgFile = this.eventForm.get('imageFile')?.value ? this.eventForm.get('imageFile')?.value._files[0]:File;
       this.uploadFile();
-      /*
+      
       const eventModel: EventModel = {
         eventName: this.eventForm.get('eventName')?.value,
         company: this.eventForm.get('company')?.value,
@@ -79,7 +80,7 @@ export class CreateEventComponent implements OnInit {
         hour: this.eventForm.get('hour')?.value,
         minute: this.eventForm.get('minute')?.value,
         date: this.eventForm.get('date')?.value,
-        imageFile: this.eventForm.get('imageFile')?.value ? this.imgFile.name : '',
+        imageFile: null,
         textTemplate: this.eventForm.get('textTemplate')?.value,
         id: this.userIdToUpdate
       };
@@ -100,7 +101,6 @@ export class CreateEventComponent implements OnInit {
             console.error("Error adding event", error);
           }
         );
-    */
     
       }
   }

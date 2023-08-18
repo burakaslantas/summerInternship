@@ -9,7 +9,7 @@ export class EventModel{
     hour!: string;
     minute!: string;
     date!: string;
-    imageFile!: AttachmentModel; // Change the type to accept null or File
+    imageFile!: File|null; // Change the type to accept null or File
     textTemplate!: string;
     id!: number;
   }
