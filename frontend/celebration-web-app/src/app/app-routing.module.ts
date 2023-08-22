@@ -8,10 +8,12 @@ import { CompanyListComponent } from './company-list/company-list.component';
 import { EmployeeListComponent } from './employee-list/employee-list.component';
 import { CreateEventComponent } from './create-event/create-event.component';
 import { CreateCompanyComponent } from './create-company/create-company.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'register', pathMatch: 'full'},
   { path: 'register', component: CreateRegistrationComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'event-create', component: CreateEventComponent },
   { path: 'company-create', component: CreateCompanyComponent },
   { path: 'admin-list', component: RegistrationListComponent },

@@ -35,6 +35,7 @@ import { CompanyListComponent } from './company-list/company-list.component';
 import { EventListComponent } from './event-list/event-list.component';
 import { EmployeeListComponent } from './employee-list/employee-list.component';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     CreateEventComponent,
     CompanyListComponent,
     EventListComponent,
-    EmployeeListComponent
+    EmployeeListComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

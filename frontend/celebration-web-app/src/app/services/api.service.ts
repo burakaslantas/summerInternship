@@ -22,9 +22,20 @@ export class ApiService {
   private companyDataBaseUrl: string = "http://localhost:3000/companyDataBaseUrl"
   private employeeDataBaseUrl: string = "http://localhost:3000/employeeDataBaseUrl"
   private imgDataBaseUrl: string = "http://localhost:3000/imgDataBaseUrl"
+  private authUrl: string = "http://localhost:3000/auth"
   constructor(private http: HttpClient) { }
 
+  loginAuth(registerObj: AdminModel) {
+    return this.http.post<AdminModel>(`${this.authUrl}/login`, registerObj, httpOptions)
+  }
 
+  registerAuth(registerObj: AdminModel) {
+    return this.http.post<AdminModel>(`${this.authUrl}`, registerObj, httpOptions)
+  }
+
+  getAllUsersAuth() {
+    return this.http.get<AdminModel[]>(`${this.authUrl}`, httpOptions)
+  }
 
   postRegistration(registerObj: AdminModel) {
     return this.http.post<AdminModel>(`${this.adminDataBaseUrl}`, registerObj, httpOptions)
