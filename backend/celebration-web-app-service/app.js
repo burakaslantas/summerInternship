@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
+var authMiddleware = require('./middlewares/auth')
 
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
@@ -38,11 +39,11 @@ app.use(express.static(__dirname));
 
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
-app.use('/adminDataBaseUrl', adminRouter);
-app.use('/eventDataBaseUrl', eventRouter);
-app.use('/companyDataBaseUrl', companyRouter);
-app.use('/employeeDataBaseUrl', employeeRouter);
-app.use('/imgDataBaseUrl', imgUploadRouter);
+app.use('/adminDataBaseUrl', authMiddleware, adminRouter);
+app.use('/eventDataBaseUrl', authMiddleware, eventRouter);
+app.use('/companyDataBaseUrl', authMiddleware, companyRouter);
+app.use('/employeeDataBaseUrl', authMiddleware, employeeRouter);
+app.use('/imgDataBaseUrl', authMiddleware, imgUploadRouter);
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler

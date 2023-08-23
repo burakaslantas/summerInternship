@@ -21,7 +21,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatChipsModule } from '@angular/material/chips';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgToastModule } from 'ng-angular-popup';
 import { NgConfirmModule } from 'ng-confirm-box';
 
@@ -36,7 +36,9 @@ import { EventListComponent } from './event-list/event-list.component';
 import { EmployeeListComponent } from './employee-list/employee-list.component';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { LoginComponent } from './login/login.component';
-
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { LayoutComponent } from './layout/layout.component';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { LoginComponent } from './login/login.component';
     CompanyListComponent,
     EventListComponent,
     EmployeeListComponent,
-    LoginComponent
+    LoginComponent,
+    LayoutComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
@@ -79,7 +83,10 @@ import { LoginComponent } from './login/login.component';
     MaterialFileInputModule
     
   ],
-  providers: [],
+  providers: [
+    // Register the JWT interceptor
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

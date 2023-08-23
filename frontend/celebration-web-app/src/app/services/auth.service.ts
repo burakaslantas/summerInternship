@@ -24,8 +24,9 @@ export class AuthService {
     }
   }
 
-  isAuthenticated(): Observable<boolean> {
-    return this.isAuthenticatedSubject.asObservable();
+  isAuthenticated(): boolean {
+    const accessToken = this.getAccessToken();
+    return !!accessToken;
   }
 
   login(email: string, emailPassword: string): Observable<any> {
@@ -34,8 +35,10 @@ export class AuthService {
     return this.http.post<any>(`${this.apiUrl}/login`, loginData).pipe(
       // Assuming your backend returns an accessToken on successful login
       // Modify this part based on your actual API response
-      map((response: { accessToken: string }) => { // Updated response property name
-        const accessToken = response.accessToken; // Updated property name
+      map(response => { // Updated response property name
+        console.log(response)
+        const accessToken = response.data.accessToken; // Updated property name
+        console.log(accessToken)
         if (accessToken) {
           this.setAccessToken(accessToken); // Updated method name
           this.isAuthenticatedSubject.next(true);
@@ -45,17 +48,23 @@ export class AuthService {
     );
   }
 
-  logout(): void {
+  logout(): Observable<void> {
     // Remove the access token and reset the authentication status
-    this.removeAccessToken(); // Updated method name
+    this.removeAccessToken();
     this.isAuthenticatedSubject.next(false);
+    
+    // Return an Observable with void (nothing to emit)
+    return new Observable<void>((observer) => {
+      observer.next();
+      observer.complete();
+    });
   }
 
   private setAccessToken(accessToken: string): void { // Updated method name
     localStorage.setItem(this.accessTokenKey, accessToken); // Updated key name
   }
 
-  private getAccessToken(): string | null { // Updated method name
+  public getAccessToken(): string | null { // Updated method name
     return localStorage.getItem(this.accessTokenKey); // Updated key name
   }
 

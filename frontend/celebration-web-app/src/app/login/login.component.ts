@@ -13,7 +13,11 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   errorMessage: string = '';
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private activatedRoute: ActivatedRoute, private router: Router, private toastService: NgToastService) { }
+  constructor(private formBuilder: FormBuilder, 
+    private authService: AuthService, 
+    private activatedRoute: ActivatedRoute, 
+    private router: Router, 
+    private toastService: NgToastService) { }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
@@ -31,6 +35,7 @@ export class LoginComponent implements OnInit {
         .subscribe(res=>{
           this.toastService.success({detail: "SUCCESS", summary: "Enquiry Added", duration: 3000});
           this.loginForm.reset();
+          this.router.navigate(['/admin-list'])
         })
     }
   }

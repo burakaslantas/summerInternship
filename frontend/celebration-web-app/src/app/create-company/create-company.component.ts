@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { ApiService } from '../services/api.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-create-company',
@@ -19,11 +20,17 @@ export class CreateCompanyComponent implements OnInit {
   form: any;
   myform: any;
 
-  constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute, private router: Router, private api: ApiService, private toastService: NgToastService){
+  constructor(private fb: FormBuilder, private authService: AuthService, private activatedRoute: ActivatedRoute, private router: Router, private api: ApiService, private toastService: NgToastService){
 
   }
 
   ngOnInit(): void {
+    if (!this.authService.isAuthenticated()) {
+      // If the user is not authenticated, you can handle it as needed
+      // For example, you can redirect them to the login page
+      this.router.navigate(['/login']);
+    }
+    
     this.companyForm = this.fb.group({
       companyName: [''],
       hrMail: [''],
@@ -32,6 +39,7 @@ export class CreateCompanyComponent implements OnInit {
       aLiveCcMail: [''],
       aLiveBccMail: [''],
     });
+    
 
     this.activatedRoute.params.subscribe(val=>{
       this.userIdToUpdate = val['id'];
