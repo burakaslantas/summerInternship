@@ -63,9 +63,6 @@ router.get('/:id', async function(req, res) {
   }
 });
 
-
-// POST a new admin
-/*
 router.post('/', async function(req, res) {
   console.log(req.body)
   const { adminName, email, emailPassword, company } = req.body;
@@ -104,7 +101,6 @@ router.post('/', async function(req, res) {
     res.status(500).json({ error: 'An error occurred' });
   }
 });
-*/
 
 // PUT (update) an existing admin by ID
 router.put('/:id', async function(req, res) {

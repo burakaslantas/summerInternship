@@ -23,7 +23,7 @@ export class CreateEventComponent implements OnInit {
   maxFileSize = 10 * 1024 * 1024;
   public packages = []
 
-  attachments: any[] = [];
+  attachment: any;
   eventForm!: FormGroup;
   imgFile!: File;
   public userIdToUpdate!: number;
@@ -66,10 +66,11 @@ export class CreateEventComponent implements OnInit {
     });
   }
 
-  submit() {
+  async submit() {
     if (this.eventForm.valid) {
       this.imgFile = this.eventForm.get('imageFile')?.value ? this.eventForm.get('imageFile')?.value._files[0]:File;
-      this.uploadFile();
+      await this.uploadFile();
+      console.log("imageFile from front", this.attachment);
       
       const eventModel: EventModel = {
         eventName: this.eventForm.get('eventName')?.value,
@@ -80,7 +81,7 @@ export class CreateEventComponent implements OnInit {
         hour: this.eventForm.get('hour')?.value,
         minute: this.eventForm.get('minute')?.value,
         date: this.eventForm.get('date')?.value,
-        imageFile: null,
+        imageFile: this.attachment,
         textTemplate: this.eventForm.get('textTemplate')?.value,
         id: this.userIdToUpdate
       };
@@ -111,7 +112,7 @@ export class CreateEventComponent implements OnInit {
     await this.api.postImgObj(formData).toPromise().then(response => {
       if (response !== undefined && response.error == null){
         const attachment : any = response; // TO DO!!! attachment
-        this.attachments.push(attachment);
+        this.attachment = attachment;
       }
     })
     .catch(reason => {

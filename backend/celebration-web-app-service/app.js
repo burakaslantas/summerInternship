@@ -14,6 +14,7 @@ var eventRouter = require('./routes/event');
 var companyRouter = require('./routes/company');
 var employeeRouter = require('./routes/employee');
 var imgUploadRouter = require('./routes/imgUpload');
+var exportDataRouter = require('./routes/exportData');
 
 var bodyParser = require('body-parser');
 var multer = require('multer');
@@ -44,6 +45,7 @@ app.use('/eventDataBaseUrl', authMiddleware, eventRouter);
 app.use('/companyDataBaseUrl', authMiddleware, companyRouter);
 app.use('/employeeDataBaseUrl', authMiddleware, employeeRouter);
 app.use('/imgDataBaseUrl', authMiddleware, imgUploadRouter);
+app.use('/exportData', exportDataRouter);
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler

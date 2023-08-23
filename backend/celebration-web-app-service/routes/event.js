@@ -76,7 +76,7 @@ router.get('/:id', async function(req, res) {
 // POST a new event
 router.post('/', async function(req, res) {
   const { eventName, type, to, bcc, hour, minute, date, imageFile, textTemplate, company } = req.body;
-  
+  console.log(imageFile)
   try {
     const companyObj = await prisma.companyModel.findUnique({
       where: { companyName: company }
@@ -95,7 +95,7 @@ router.post('/', async function(req, res) {
         hour,
         minute,
         date,
-        imageFile: imageFile ? { create: { filePath: imageFile } } : undefined,
+        imageFile: imageFile ? { connect: { id: imageFile.id } } : undefined,
         textTemplate,
         company: { connect: { id: companyObj.id } }
       },

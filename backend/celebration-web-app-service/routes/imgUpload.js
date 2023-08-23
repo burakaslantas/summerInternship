@@ -29,12 +29,12 @@ router.post('/upload', upload.single('file'), async function(req, res) {
     const { originalname, filename, path: filePath } = req.file;
 
     // Save file information to the database
+    console.log("this is imgUpload req.body:", req.body)
     const createdAttachment = await prisma.attachmentModel.create({
       data: {
         originalName: originalname,
         fileName: filename,
-        filePath: filePath,
-        event: { connect: { id: req.body.eventId } } // Connect the attachment to an event
+        filePath: filePath, // Connect the attachment to an event
       }
     });
 
