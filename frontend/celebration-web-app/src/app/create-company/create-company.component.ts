@@ -33,11 +33,13 @@ export class CreateCompanyComponent implements OnInit {
     
     this.companyForm = this.fb.group({
       companyName: [''],
+      companyFullName: [''],
       hrMail: [''],
       hrMailPassword: [''],
       aLiveToMail: [''],
       aLiveCcMail: [''],
       aLiveBccMail: [''],
+      companyHrGroupMail: [''],
     });
     
 
@@ -78,11 +80,13 @@ export class CreateCompanyComponent implements OnInit {
   fillFormToUpdate(user: CompanyModel){
     this.companyForm.setValue({
       companyName: user.companyName,
+      companyFullName: user.companyFullName,
       hrMail: user.hrMail,
       hrMailPassword: user.hrMailPassword,
       aLiveToMail: user.aLiveToMail,
       aLiveCcMail: user.aLiveCcMail,
       aLiveBccMail: user.aLiveBccMail,
+      companyHrGroupMail: user.companyHrGroupMail,
       id: user.id
     });
   }

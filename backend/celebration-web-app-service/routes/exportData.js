@@ -24,6 +24,7 @@ router.get('/', async (req, res) => {
         for (const event of company.events) {
             const eventData = {
             companyName: company.companyName,
+            companyFullName: company.companyFullName,
             host: 'smtp.office365.com',
             port: 587,
             user: company.hrMail,
@@ -32,7 +33,7 @@ router.get('/', async (req, res) => {
                 event.type === 'Birthday' ? event.imageFile?.originalName || '' : '',
             hireDateAttachment:
                 event.type === 'Hire Date' ? event.imageFile?.originalName || '' : '',
-            companyHR: company.hrMail,
+            companyHR: company.companyHrGroupMail,
             companyDevs: company.admins.map((admin) => admin.email).join(', '),
             aliveTo: company.aLiveToMail,
             aliveBCC: company.aLiveBccMail,

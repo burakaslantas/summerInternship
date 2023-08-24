@@ -35,17 +35,19 @@ router.get('/:id', async function(req, res) {
 });
 
 router.post('/', async function(req, res) {
-  const { companyName, hrMail, hrMailPassword, aLiveToMail, aLiveCcMail, aLiveBccMail } = req.body;
+  const { companyName, companyFullName, companyHrGroupMail, hrMail, hrMailPassword, aLiveToMail, aLiveCcMail, aLiveBccMail } = req.body;
   
   try {
     const createdCompany = await prisma.companyModel.create({
       data: {
         companyName,
+        companyFullName,
         hrMail,
         hrMailPassword,
         aLiveToMail,
         aLiveCcMail,
         aLiveBccMail,
+        companyHrGroupMail,
       },
     });
     res.status(201).json(createdCompany);
@@ -57,18 +59,20 @@ router.post('/', async function(req, res) {
 
 router.put('/:id', async function(req, res) {
   const companyId = parseInt(req.params.id);
-  const { companyName, hrMail, hrMailPassword, aLiveToMail, aLiveCcMail, aLiveBccMail } = req.body;
+  const { companyName, companyFullName, hrMail, hrMailPassword, aLiveToMail, aLiveCcMail, aLiveBccMail } = req.body;
 
   try {
     const updatedCompany = await prisma.companyModel.update({
       where: { id: companyId },
       data: {
         companyName,
+        companyFullName,
         hrMail,
         hrMailPassword,
         aLiveToMail,
         aLiveCcMail,
         aLiveBccMail,
+        companyHrGroupMail,
       },
     });
     res.status(200).json(updatedCompany);

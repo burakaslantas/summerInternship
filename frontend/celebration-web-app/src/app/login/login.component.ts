@@ -28,15 +28,24 @@ export class LoginComponent implements OnInit {
 
   submit(): void {
     if (this.loginForm.valid) {
-        console.log(this.loginForm.value);
-        const email = this.loginForm.get('email')?.value;
-        const emailPassword = this.loginForm.get('emailPassword')?.value;
-        this.authService.login(email, emailPassword)
-        .subscribe(res=>{
-          this.toastService.success({detail: "SUCCESS", summary: "Enquiry Added", duration: 3000});
-          this.loginForm.reset();
-          this.router.navigate(['/admin-list'])
-        })
+      console.log(this.loginForm.value);
+      const email = this.loginForm.get('email')?.value;
+      const emailPassword = this.loginForm.get('emailPassword')?.value;
+      
+      this.authService.login(email, emailPassword)
+        .subscribe(
+          res => {
+            // Successful login
+            this.toastService.success({detail: "Login successful, welcome!", summary: "", duration: 3000});
+            this.loginForm.reset();
+            this.router.navigate(['/admin-list']);
+          },
+          error => {
+            // Error handling for unsuccessful login
+            this.errorMessage = "Login failed. Please check your credentials.";
+            this.toastService.error({detail: this.errorMessage, summary: "", duration: 3000});
+          }
+        );
     }
-  }
+  }  
 }

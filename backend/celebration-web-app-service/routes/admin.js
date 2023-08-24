@@ -16,7 +16,7 @@ router.get('/', async function(req, res) {
 
       return {
         adminName: admin.adminName,
-        company: company ? company.companyName : '',
+        company: company ? company.companyFullName : '',
         email: admin.email,
         emailPassword: admin.emailPassword,
         id: admin.id

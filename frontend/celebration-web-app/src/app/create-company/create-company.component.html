@@ -5,10 +5,16 @@
 <div class="registration-form m-3 p-4">
     <form [formGroup] = "companyForm">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <mat-form-field appearance="outline">
-                    <mat-label>Isim</mat-label>
-                    <input formControlName="companyName" matInput placeholder="NETAS">
+                    <mat-label>Şirket Kodu</mat-label>
+                    <input formControlName="companyName" matInput placeholder="NETS">
+                </mat-form-field>
+            </div>
+            <div class="col-md-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Şirket Adı</mat-label>
+                    <input formControlName="companyFullName" matInput placeholder="NETAS">
                 </mat-form-field>
             </div>
             <div class="col-md-4">
@@ -25,19 +31,25 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>companyHrGroupMail</mat-label>
+                    <input formControlName="companyHrGroupMail" matInput placeholder="NETAS">
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
                 <mat-form-field appearance="outline">
                     <mat-label>aLiveToMail</mat-label>
                     <input formControlName="aLiveToMail" matInput placeholder="NETAS">
                 </mat-form-field>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <mat-form-field appearance="outline">
                     <mat-label>aLiveCcMail</mat-label>
                     <input formControlName="aLiveCcMail" matInput placeholder="hrMail@netas.com.tr">
                 </mat-form-field>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <mat-form-field appearance="outline">
                     <mat-label>aLiveBccMail</mat-label>
                     <input formControlName="aLiveBccMail" matInput placeholder="">

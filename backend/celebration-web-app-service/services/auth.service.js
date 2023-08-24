@@ -9,12 +9,12 @@ const createError = require('http-errors'); // Assuming you have this library
 class authService {
   static async register(data) {
     console.log(data);
-    const { adminName, email, emailPassword, companyId } = data;
+    const { adminName, email, emailPassword, company } = data;
 
     try {
         // Şirket ismini kullanarak ilgili companyModel'i bul
         const companyObj = await prisma.companyModel.findUnique({
-          where: { id: companyId }
+          where: { companyFullName: company }
         });
     
         if (!companyObj) {
@@ -68,7 +68,7 @@ class authService {
   console.log("this is emailPassword: #", emailPassword, "#");
   console.log("this is admin.emailPassword: #", admin.emailPassword, "#");
 
-  ;
+  
   const checkPassword = bcrypt.compareSync(emailPassword, admin.emailPassword);
   console.log("this is checkPassword: ", checkPassword);
 
@@ -78,6 +78,7 @@ class authService {
   }
 
     delete admin.emailPassword;
+  
 
     const accessToken = await jwt.signAccessToken(admin);
 

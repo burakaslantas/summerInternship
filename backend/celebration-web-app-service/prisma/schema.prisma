@@ -13,11 +13,13 @@ datasource db {
 model companyModel {
   id                  Int               @id @default(autoincrement()) @unique
   companyName         String            @unique
+  companyFullName     String            @unique
   hrMail              String
   hrMailPassword      String
   aLiveToMail         String
   aLiveCcMail         String
   aLiveBccMail        String
+  companyHrGroupMail  String
   admins              adminModel[]
   employees           employeeModel[]
   events              eventModel[]

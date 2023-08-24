@@ -47,7 +47,7 @@ export class CreateRegistrationComponent implements OnInit {
   submit(){
     if(this.registrationForm.valid){
       console.log(this.registrationForm.value);
-      this.api.postRegistration(this.registrationForm.value)
+      this.api.registerAuth(this.registrationForm.value)
       .subscribe(res=>{
         this.toastService.success({detail: "SUCCESS", summary: "Enquiry Added", duration: 3000});
         this.registrationForm.reset();
