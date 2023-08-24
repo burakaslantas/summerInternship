@@ -59,7 +59,10 @@ router.get('/', async (req, res) => {
           res.status(500).json({ error: 'Error exporting data' });
         } else {
           console.log('Data exported successfully');
-          res.status(200).json({ message: 'Data exported successfully' });
+          res.setHeader('Content-Type', 'text/plain');
+          res.status(200).send(jsContent);
+
+          //res.status(200).json({ message: 'Data exported successfully' });
         }
       });
     } catch (error) {

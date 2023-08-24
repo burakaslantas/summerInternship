@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from './services/auth.service';
+import { DownloadService } from './services/download.service';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +10,5 @@ import { AuthService } from './services/auth.service';
 
 export class AppComponent {
   title = 'NETAS Admin Panel';
-  constructor(public authService: AuthService) { }
+  constructor(public authService: AuthService, public downloadService: DownloadService) { }
 }
